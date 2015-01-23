@@ -1,7 +1,13 @@
+/*
+* This small nodejs app uses the api of ssllabs for getting ssl information of an given host
+* All API Calls can be found at: https://github.com/ssllabs/ssllabs-scan/blob/master/ssllabs-api-docs.md
+* Usage: node sslping.js domain.tld
+*/
 var request = require("request")
 
-var url_first_visit = "https://api.dev.ssllabs.com/api/fa78d5a4/analyze?host=honnel.de&clearCache=off&all=done"
-var url_second_visit = "https://api.dev.ssllabs.com/api/fa78d5a4/analyze?host=honnel.de"
+var host = process.argv[2];
+var url_first_visit = "https://api.dev.ssllabs.com/api/fa78d5a4/analyze?host=" + host +"&clearCache=on&all=done"
+var url_second_visit = "https://api.dev.ssllabs.com/api/fa78d5a4/analyze?host=" + host
 
 request({
         url: url_first_visit,
@@ -9,7 +15,7 @@ request({
     }, function (error, response, body) {
     
         if (!error && response.statusCode === 200) {
-            console.log(body) // Print the json response
+            console.log(body)
         }
     })
 
